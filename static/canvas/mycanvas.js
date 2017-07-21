@@ -4,6 +4,7 @@
  * Created by Administrator on 2017/04/01.
  */
 
+var win_w = document.body.clientWidth;
 var CANVAS = function CANVAS(options) {
     this.canvas = options.el ? document.querySelector(options.el) : document.createElement('canvas');
     //
@@ -14,7 +15,7 @@ var CANVAS = function CANVAS(options) {
     // this.canvas.width = w_w * 2;
     // this.canvas.height = w_h * 2;
 
-    var canvas_w = document.documentElement.clientWidth,
+    var canvas_w = document.body.clientWidth,
         canvas_h = 240 ;
     this.canvas.style.width = canvas_w + 'px';
     this.canvas.style.height = canvas_h + 'px';
@@ -80,7 +81,7 @@ CANVAS.prototype = {
     changeNum: function changeNum(obj, val) {
         // this.init_num = obj;
         Object.assign(this.init_num, obj);
-        this.ctx.clearRect(90, 60, 195, 200);
+        this.ctx.clearRect(130, 90, 180, 200);
         // this.d.text();
         this.d.current(this.init_num.current);
         this.d.coin(this.init_num.coin);
@@ -147,6 +148,8 @@ CANVAS.prototype = {
                         self.debug && console.log('回退结束', 'last:' + self.last, "target:" + target, 'Backward_angle:' + self.Backward_angle);
                         self.Forward_angle = self.Backward_angle + self.init_progress - self.Forward_angle; // 缓存本次角度值  用于回退
                         self.gooing = 0;
+                      ctx.clearRect(self.centerX/2+(win_w/4), self.centerY/2+15, (win_w/6),100);
+                      self.d.current(+self.current);
                         self.lastChange = 'back';
                         self.cb && self.cb(); // 回调函数
                         if (self.queue.length > 1) {
@@ -166,7 +169,7 @@ CANVAS.prototype = {
                         self.last = +v.toFixed(2);
                         self.debug && console.log('前进结束', 'last:' + self.last, "target:" + target, '_v:' + _v);
                         self.gooing = 0;
-                        ctx.clearRect(self.centerX/2+10, self.centerY/2+15, 300,100);
+                        ctx.clearRect(self.centerX/2+(win_w/4), self.centerY/2+15, (win_w/6),100);
                         self.d.current(+self.current);
 
                         self.lastChange = 'forward';
